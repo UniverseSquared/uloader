@@ -17,4 +17,5 @@ If your computer does not run OpenOS, the installer likely will not work. In thi
 ## Features
 
 - OpenOS-style booting (/init.lua)
+- Plan9k-style booting (files from /boot/kernel/)
 - Internet booting

@@ -6,14 +6,6 @@ local w, h = gpu.getResolution()
 
 gpu.bind(screen)
 
-function computer.getBootAddress()
-    return eeprom.getData()
-end
-
-function computer.setBootAddress(addr)
-    return eeprom.setData(addr)
-end
-
 local function readFile(fs, path)
     local handle, reason = invoke(fs, "open", path)
     if not handle then
@@ -73,16 +65,14 @@ end
 
 local config = loadConfig()
 
+initFs()
+
 local menu = {}
 
 for fs in component.list("filesystem") do
-    if invoke(fs, "exists", "/init.lua") then
-        table.insert(menu, {
-            fs = fs, path = "/init.lua", callback = function(init)
-                boot(init)
-                error("computer halted")
-            end
-        })
+    local bootMethods = detectBoot(fs)
+    for _, method in pairs(bootMethods) do
+        table.insert(menu, method)
     end
 end
 
