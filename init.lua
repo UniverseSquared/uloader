@@ -53,7 +53,12 @@ local function loadConfig()
 
     local config = load(configData, "=uloader_config")()
 
-    gpu.setResolution(config.resolution[1], config.resolution[2])
+    local resolution = config.resolution
+    if resolution == "max" then
+        resolution = { gpu.maxResolution() }
+    end
+
+    gpu.setResolution(resolution[1], resolution[2])
 
     for moduleName, path in pairs(config.modules) do
         _G[moduleName] = load(readFile(fs, path), "=" .. path)()

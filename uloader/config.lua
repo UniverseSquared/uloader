@@ -1,5 +1,5 @@
 return {
-    resolution = { 100, 50 },
+    resolution = "max",
     alwaysMenu = true,
     modules = {
         initFs = "/uloader/fs.lua",
