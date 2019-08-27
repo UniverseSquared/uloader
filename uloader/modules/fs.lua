@@ -1,6 +1,6 @@
 local invoke = component.invoke
 
-local function readFile(fs, path)
+function readFile(fs, path)
     local handle, reason = invoke(fs, "open", path)
     if not handle then
         return nil, reason
@@ -13,8 +13,4 @@ local function readFile(fs, path)
     until data == nil
 
     return buffer
-end
-
-return function()
-    _G.readFile = readFile
 end

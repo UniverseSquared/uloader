@@ -1,4 +1,4 @@
-return function()
+function internetBoot()
     local gpu = component.proxy(component.list("gpu")())
     local w, h = gpu.getResolution()
     local internet = component.list("internet")()

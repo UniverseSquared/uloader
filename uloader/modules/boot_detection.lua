@@ -9,7 +9,7 @@ local function boot(initData)
     init()
 end
 
-return function(fs)
+function detectBoot(fs)
     local bootMethods = {}
 
     if invoke(fs, "isDirectory", "/boot/kernel") then
