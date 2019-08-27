@@ -27,7 +27,7 @@ local function boot(initData)
     init()
 end
 
-local function waitForKey()
+function waitForKey()
     while true do
         local signal = { computer.pullSignal() }
         if signal[1] == "key_down" then
@@ -94,6 +94,10 @@ table.insert(menu, {
     text = "Internet Boot", callback = function()
         internetBoot()
     end
+})
+
+table.insert(menu, {
+    text = "Update uloader", callback = selfUpdate
 })
 
 table.insert(menu, {

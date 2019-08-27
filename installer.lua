@@ -27,7 +27,8 @@ local fileList = {
     "/uloader/config.lua",
     "/uloader/modules/internet_boot.lua",
     "/uloader/modules/boot_detection.lua",
-    "/uloader/modules/fs.lua"
+    "/uloader/modules/fs.lua",
+    "/uloader/modules/updater.lua"
 }
 
 fs.makeDirectory("/uloader")
@@ -37,6 +38,10 @@ for _, path in pairs(fileList) do
     status("Downloading file " .. path .. "...")
     local url = urlBase .. path
     local data = downloadFile(url)
+
+    if fs.exists(path) then
+        fs.remove(path)
+    end
 
     local handle = fs.open(path, "w")
     fs.write(handle, data)
