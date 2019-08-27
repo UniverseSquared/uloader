@@ -32,6 +32,7 @@ local fileList = {
 }
 
 filesystem.makeDirectory("/uloader")
+filesystem.makeDirectory("/uloader/modules")
 
 for _, path in pairs(fileList) do
     local url = urlBase .. path
