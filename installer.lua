@@ -36,16 +36,21 @@ fs.makeDirectory("/uloader/modules")
 
 for _, path in pairs(fileList) do
     status("Downloading file " .. path .. "...")
-    local url = urlBase .. path
-    local data = downloadFile(url)
 
-    if fs.exists(path) then
-        fs.remove(path)
+    if path == "/uloader/config.lua" and fs.exists(path) then
+        status("Config not overwritten. You may want to refer to the documentation on GitHub to manually update your config if necessary.")
+    else
+        local url = urlBase .. path
+        local data = downloadFile(url)
+
+        if fs.exists(path) then
+            fs.remove(path)
+        end
+
+        local handle = fs.open(path, "w")
+        fs.write(handle, data)
+        fs.close(handle)
     end
-
-    local handle = fs.open(path, "w")
-    fs.write(handle, data)
-    fs.close(handle)
 end
 
 status("Downloading init.lua...")
