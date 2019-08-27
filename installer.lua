@@ -26,9 +26,9 @@ end
 local urlBase = "https://raw.githubusercontent.com/UniverseSquared/uloader/master"
 local fileList = {
     "/uloader/config.lua",
-    "/uloader/internet_boot.lua",
-    "/uloader/boot_detection.lua",
-    "/uloader/fs.lua"
+    "/uloader/modules/internet_boot.lua",
+    "/uloader/modules/boot_detection.lua",
+    "/uloader/modules/fs.lua"
 }
 
 filesystem.makeDirectory("/uloader")
