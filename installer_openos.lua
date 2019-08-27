@@ -14,8 +14,7 @@ print("Please insert the eeprom you wish to install uloader to, and then press a
 event.pull(nil, "key_down")
 
 print("Downloading installer...")
---local handle = internet.request("https://raw.githubusercontent.com/UniverseSquared/uloader/master/installer.lua")
-local handle = internet.request("https://pastebin.com/raw/XA2rfrB6")
+local handle = internet.request("https://raw.githubusercontent.com/UniverseSquared/uloader/master/installer.lua")
 handle.finishConnect()
 
 local buffer = ""
