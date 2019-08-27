@@ -1,14 +1,13 @@
-local computer = require("computer")
-local component = require("component")
-local invoke = component.invoke
 local eeprom = component.proxy(component.list("eeprom")())
-local filesystem = require("filesystem")
-
-if not component.isAvailable("internet") then
-    print("This installer requires an internet card.")
-end
-
+local fs = component.proxy(eeprom.getData())
 local internet = component.proxy(component.list("internet")())
+local gpu = component.proxy(component.list("gpu")())
+
+local y = 1
+function status(str)
+    gpu.set(1, y, str)
+    y = y + 1
+end
 
 function downloadFile(url)
     local handle = internet.request(url)
@@ -31,24 +30,30 @@ local fileList = {
     "/uloader/modules/fs.lua"
 }
 
-filesystem.makeDirectory("/uloader")
-filesystem.makeDirectory("/uloader/modules")
+fs.makeDirectory("/uloader")
+fs.makeDirectory("/uloader/modules")
 
 for _, path in pairs(fileList) do
+    status("Downloading file " .. path .. "...")
     local url = urlBase .. path
-    print("Downloading " .. url .. " to " .. path .. "...")
+    local data = downloadFile(url)
 
-    local data = downloadFile(url, path)
-    local fileHandle = io.open(path, "w")
-    fileHandle:write(data)
-    fileHandle:close()
+    local handle = fs.open(path, "w")
+    fs.write(handle, data)
+    fs.close(handle)
 end
 
-print("Downloading init.lua...")
-local data = downloadFile(urlBase .. "/init.lua", "/tmp/init.lua")
+status("Downloading init.lua...")
+local init = downloadFile(urlBase .. "/init.lua")
 
-print("Flashing uloader. Do not power off or reboot.")
-eeprom.set(data)
-eeprom.setData(filesystem.get("/").address)
+status("Flashing uloader. Do not power off or reboot.")
+eeprom.set(init)
 
-print("Successfully installed uloader. It is now safe to reboot.")
+status("Completed installation! Press any key to reboot.")
+
+while true do
+    local signal = { computer.pullSignal() }
+    if signal[1] == "key_down" then
+        computer.shutdown(true)
+    end
+end

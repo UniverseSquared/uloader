@@ -6,13 +6,13 @@ uloader is a small bootloader for [OpenComputers](https://ocdoc.cil.li/) compute
 
 To install uloader from OpenOS, use the following commands:
 ```
-# wget https://raw.githubusercontent.com/UniverseSquared/uloader/master/installer.lua
-# installer
+# wget https://raw.githubusercontent.com/UniverseSquared/uloader/master/installer_openos.lua
+# installer_openos
 ```
 
 After the installation completes, you should be able to reboot to uloader.
 
-If your computer does not run OpenOS, the installer likely will not work. In this case, download the uloader folder to the root of your computer's drive and then download and flash init.lua to the eeprom.
+If your computer does not run OpenOS, the OpenOS installer will not work. In this case, download [installer.lua](https://raw.githubusercontent.com/UniverseSquared/uloader/master/installer.lua), flash it to the eeprom and reboot. **Before doing this, however, you should ensure you have an internet card.**
 
 ## Features
 
