@@ -28,4 +28,3 @@ Some options can be configured in uloader, by modifying the configuration file a
 | ------ | ----------- | ------------- |
 | `resolution` | The resolution that should be set on boot. Either a table of two numbers (width and height) or the string "max", which sets the resolution to the maximum the GPU can handle. | "max" |
 | `alwaysMenu` | If this is true, the boot selection menu will always be shown. If this is false, the menu will be skipped if there is only one boot candidate. | true |
-| `modules` | A list of paths to modules and the variable name they should be given. *Shouldn't be modified by users, only used internally.* | (Refer to [config.lua](https://github.com/UniverseSquared/uloader/blob/master/uloader/config.lua)) |

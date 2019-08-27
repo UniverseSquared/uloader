@@ -60,16 +60,18 @@ local function loadConfig()
 
     gpu.setResolution(resolution[1], resolution[2])
 
-    for moduleName, path in pairs(config.modules) do
-        _G[moduleName] = load(readFile(fs, path), "=" .. path)()
-    end
-
     return config
 end
 
 local config = loadConfig()
 
-initFs()
+local fs = eeprom.getData()
+for k, module in pairs(invoke(fs, "list", "/uloader/modules")) do
+    if k ~= "n" then
+        local path = "/uloader/modules/" .. module
+        load(readFile(fs, path))()
+    end
+end
 
 local menu = {}
 
