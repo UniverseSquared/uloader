@@ -48,6 +48,6 @@ local data = downloadFile(urlBase .. "/init.lua", "/tmp/init.lua")
 
 print("Flashing uloader. Do not power off or reboot.")
 eeprom.set(data)
-eeprom.setData(computer.getBootAddress())
+eeprom.setData(filesystem.get("/").address)
 
 print("Successfully installed uloader. It is now safe to reboot.")
