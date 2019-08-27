@@ -40,10 +40,9 @@ local function loadConfig()
     local fs = eeprom.getData()
     
     if not invoke(fs, "exists", "/uloader/config.lua") then
-        local w, h = gpu.maxResolution()
-        return {
-            resolution = { w, h }
-        }
+        gpu.set(1, 1, "No config file (/uloader/config.lua) exists! Press any key to shutdown.")
+        waitForKey()
+        computer.shutdown()
     end
 
     local configData, reason = readFile(fs, "/uloader/config.lua")
