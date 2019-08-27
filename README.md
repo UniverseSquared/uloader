@@ -6,7 +6,7 @@ uloader is a small bootloader for [OpenComputers](https://ocdoc.cil.li/) compute
 
 To install uloader from OpenOS, use the following commands:
 ```
-# wget https://raw.githubusercontent/UniverseSquared/uloader/master/installer.lua
+# wget https://raw.githubusercontent.com/UniverseSquared/uloader/master/installer.lua
 # installer
 ```
 
