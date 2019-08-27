@@ -4,6 +4,8 @@ uloader is a small bootloader for [OpenComputers](https://ocdoc.cil.li/) compute
 
 ## Installation
 
+If you want to update uloader when it is already installed, reboot to the uloader menu and select 'Update uloader'.
+
 To install uloader from OpenOS, use the following commands:
 ```
 # wget https://raw.githubusercontent.com/UniverseSquared/uloader/master/installer_openos.lua
