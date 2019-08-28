@@ -33,10 +33,9 @@ function selfUpdate()
     gpu.set(1, 1, "Downloading installer...")
     local data = downloadFile("https://raw.githubusercontent.com/UniverseSquared/uloader/master/installer.lua")
 
-    gpu.set(1, 2, "Flashing installer to eeprom. Do not reboot or shutdown.")
-    eeprom.set(data)
+    gpu.setBackground(0x000000)
+    gpu.setForeground(0xFFFFFF)
+    gpu.fill(1, 1, w, h, " ")
 
-    gpu.set(1, 3, "Finished flashing installer. Press any key to reboot.")
-    waitForKey()
-    computer.shutdown(true)
+    load(data)()
 end
