@@ -28,7 +28,8 @@ local fileList = {
     "/uloader/modules/internet_boot.lua",
     "/uloader/modules/boot_detection.lua",
     "/uloader/modules/fs.lua",
-    "/uloader/modules/updater.lua"
+    "/uloader/modules/updater.lua",
+    "/uloader/modules/menu.lua"
 }
 
 fs.makeDirectory("/uloader")

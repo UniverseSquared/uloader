@@ -73,14 +73,7 @@ for k, module in pairs(invoke(fs, "list", "/uloader/modules")) do
     end
 end
 
-local menu = {}
-
-for fs in component.list("filesystem") do
-    local bootMethods = detectBoot(fs)
-    for _, method in pairs(bootMethods) do
-        table.insert(menu, method)
-    end
-end
+local menu = createMenu()
 
 if #menu == 0 then
     error("no bootable medium found")
@@ -90,59 +83,8 @@ if #menu == 1 and not config.alwaysMenu then
     boot(menu[1])
 end
 
-table.insert(menu, {
-    text = "Internet Boot", callback = function()
-        internetBoot()
-    end
-})
-
-table.insert(menu, {
-    text = "Update uloader", callback = selfUpdate
-})
-
-table.insert(menu, {
-    text = "Reboot", callback = function()
-        computer.shutdown(true)
-    end
-})
-
-table.insert(menu, {
-    text = "Shutdown", callback = function()
-        computer.shutdown()
-    end
-})
-
-local function printMenu(i)
-    gpu.setBackground(0x000000)
-    gpu.setForeground(0xFFFFFF)
-    gpu.fill(1, 1, w, h, " ")
-
-    for k, init in pairs(menu) do
-        if k == i then
-            gpu.setBackground(0xFFFFFF)
-            gpu.setForeground(0x000000)
-        else
-            gpu.setBackground(0x000000)
-            gpu.setForeground(0xFFFFFF)
-        end
-
-        if init.text ~= nil then
-            gpu.set(1, k, init.text)
-        else
-            local label = invoke(init.fs, "getLabel")
-            local str = init.path .. " (" .. init.fs:sub(1, 3)
-            if label then
-                str = str .. ", " .. label
-            end
-            str = str .. ")"
-
-            gpu.set(1, k, str)
-        end
-    end
-end
-
 local i = 1
-printMenu(i)
+printMenu(menu, i)
 while true do
     local signal = { computer.pullSignal() }
     if signal[1] == "key_down" then
@@ -161,6 +103,11 @@ while true do
             i = #menu
         end
 
-        printMenu(i)
+        printMenu(menu, i)
+    elseif signal[1] == "component_added" or signal[1] == "component_removed" then
+        if signal[3] == "filesystem" then
+            menu = createMenu()
+            printMenu(menu, i)
+        end
     end
 end
