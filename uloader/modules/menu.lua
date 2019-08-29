@@ -37,7 +37,7 @@ function createMenu()
     return menu
 end
 
-function printMenu(menu, i)
+function printMenu(menu, i, noConfigWarning)
     gpu.setBackground(0x000000)
     gpu.setForeground(0xFFFFFF)
     gpu.fill(1, 1, w, h, " ")

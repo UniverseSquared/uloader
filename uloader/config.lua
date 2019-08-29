@@ -1,4 +1,4 @@
 return {
-    resolution = "max",
-    alwaysMenu = true
+    alwaysMenu = true,
+    resolution = { 100, 50 }
 }

@@ -36,42 +36,16 @@ function waitForKey()
     end
 end
 
-local function loadConfig()
-    local fs = eeprom.getData()
-    
-    if not invoke(fs, "exists", "/uloader/config.lua") then
-        gpu.set(1, 1, "No config file (/uloader/config.lua) exists! Press any key to shutdown.")
-        waitForKey()
-        computer.shutdown()
-    end
-
-    local configData, reason = readFile(fs, "/uloader/config.lua")
-
-    if not configData then
-        return nil, reason
-    end
-
-    local config = load(configData, "=uloader_config")()
-
-    local resolution = config.resolution
-    if resolution == "max" then
-        resolution = { gpu.maxResolution() }
-    end
-
-    gpu.setResolution(resolution[1], resolution[2])
-
-    return config
-end
-
-local config = loadConfig()
-
 local fs = eeprom.getData()
 for k, module in pairs(invoke(fs, "list", "/uloader/modules")) do
     if k ~= "n" then
         local path = "/uloader/modules/" .. module
-        load(readFile(fs, path))()
+        load(readFile(fs, path), "=" .. module)()
     end
 end
+
+local config = loadConfig()
+applyConfig(config)
 
 local menu = createMenu()
 
