@@ -2,11 +2,13 @@ local invoke = component.invoke
 local gpu = component.proxy(component.list("gpu")())
 local w, h = gpu.getResolution()
 
-function createMenu()
+uloader.menu = {}
+
+function uloader.menu.createMenu()
     local menu = {}
 
     for fs in component.list("filesystem") do
-        local bootMethods = detectBoot(fs)
+        local bootMethods = uloader.boot.detectBoot(fs)
         for _, method in pairs(bootMethods) do
             table.insert(menu, method)
         end
@@ -14,7 +16,7 @@ function createMenu()
 
     table.insert(menu, {
         text = "Internet Boot", callback = function()
-            internetBoot()
+            uloader.internet.internetBoot()
         end
     })
     
@@ -37,7 +39,7 @@ function createMenu()
     return menu
 end
 
-function printMenu(menu, i, noConfigWarning)
+function uloader.menu.printMenu(menu, i)
     gpu.setBackground(0x000000)
     gpu.setForeground(0xFFFFFF)
     gpu.fill(1, 1, w, h, " ")

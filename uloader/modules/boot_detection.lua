@@ -1,15 +1,17 @@
 local invoke = component.invoke
 
+uloader.boot = {}
+
 local function boot(initData)
     computer.getBootAddress = function() return initData.fs end
     computer.setBootAddress = function(addr) end
 
-    local buffer = readFile(initData.fs, initData.path)
+    local buffer = uloader.fs.readFile(initData.fs, initData.path)
     local init = load(buffer)
     init()
 end
 
-function detectBoot(fs)
+function uloader.boot.detectBoot(fs)
     local bootMethods = {}
 
     if invoke(fs, "isDirectory", "/boot/kernel") then

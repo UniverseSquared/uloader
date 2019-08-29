@@ -2,6 +2,8 @@ local invoke = component.invoke
 local eeprom = component.proxy(component.list("eeprom")())
 local gpu = component.proxy(component.list("gpu")())
 
+uloader.config = {}
+
 local function serializeTable(table, indent)
 	local buffer = "{\n"
 	
@@ -34,7 +36,7 @@ local function serializeTable(table, indent)
 	return buffer
 end
 
-function loadConfig()
+function uloader.config.loadConfig()
     local fs = eeprom.getData()
     
     local defaultConfig = {
@@ -43,11 +45,11 @@ function loadConfig()
     }
 
     if not invoke(fs, "exists", "/uloader/config.lua") then
-        writeFile(fs, "/uloader/config.lua", "return " .. serializeTable(defaultConfig))
+        uloader.fs.writeFile(fs, "/uloader/config.lua", "return " .. serializeTable(defaultConfig))
         return defaultConfig
     end
 
-    local configData, reason = readFile(fs, "/uloader/config.lua")
+    local configData, reason = uloader.fs.readFile(fs, "/uloader/config.lua")
 
     if not configData then
         return nil, reason
@@ -64,7 +66,7 @@ function loadConfig()
     return config
 end
 
-function applyConfig(config)
+function uloader.config.applyConfig(config)
     local resolution = config.resolution
     if resolution == "max" then
         resolution = { gpu.maxResolution() }

@@ -1,4 +1,6 @@
-function internetBoot()
+uloader.internet = {}
+
+function uloader.internet.internetBoot()
     local gpu = component.proxy(component.list("gpu")())
     local w, h = gpu.getResolution()
     local internet = component.list("internet")()

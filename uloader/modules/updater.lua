@@ -3,6 +3,8 @@ local w, h = gpu.getResolution()
 local eeprom = component.proxy(component.list("eeprom")())
 local internet = component.list("internet")()
 
+uloader.updater = {}
+
 local function downloadFile(url)
     local handle = internet.request(url)
     handle.finishConnect()
@@ -16,7 +18,7 @@ local function downloadFile(url)
     return buffer
 end
 
-function selfUpdate()
+function uloader.updater.selfUpdate()
     gpu.setBackground(0x000000)
     gpu.setForeground(0xFFFFFF)
     gpu.fill(1, 1, w, h, " ")

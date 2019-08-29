@@ -1,6 +1,8 @@
 local invoke = component.invoke
 
-function readFile(fs, path)
+uloader.fs = {}
+
+function uloader.fs.readFile(fs, path)
     local handle, reason = invoke(fs, "open", path)
     if not handle then
         return nil, reason
@@ -17,7 +19,7 @@ function readFile(fs, path)
     return buffer
 end
 
-function writeFile(fs, path, data)
+function uloader.fs.writeFile(fs, path, data)
     local handle, reason = invoke(fs, "open", path, "w")
     if not handle then
         return nil, reason

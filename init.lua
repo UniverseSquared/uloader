@@ -22,7 +22,7 @@ local function readFile(fs, path)
 end
 
 local function boot(initData)
-    local buffer = readFile(initData.fs, initData.path)
+    local buffer = uloader.fs.readFile(initData.fs, initData.path)
     local init = load(buffer)
     init()
 end
@@ -36,18 +36,25 @@ function waitForKey()
     end
 end
 
+uloader = {}
+
 local fs = eeprom.getData()
-for k, module in pairs(invoke(fs, "list", "/uloader/modules")) do
+for k, filename in pairs(invoke(fs, "list", "/uloader/modules")) do
     if k ~= "n" then
-        local path = "/uloader/modules/" .. module
-        load(readFile(fs, path), "=" .. module)()
+        local path = "/uloader/modules/" .. filename
+        local module, err = load(readFile(fs, path), "=" .. filename)
+        if module then
+            module()
+        else
+            error(err)
+        end
     end
 end
 
-local config = loadConfig()
-applyConfig(config)
+local config = uloader.config.loadConfig()
+uloader.config.applyConfig(config)
 
-local menu = createMenu()
+local menu = uloader.menu.createMenu()
 
 if #menu == 0 then
     error("no bootable medium found")
@@ -58,7 +65,7 @@ if #menu == 1 and not config.alwaysMenu then
 end
 
 local i = 1
-printMenu(menu, i)
+uloader.menu.printMenu(menu, i)
 while true do
     local signal = { computer.pullSignal() }
     if signal[1] == "key_down" then
@@ -77,11 +84,11 @@ while true do
             i = #menu
         end
 
-        printMenu(menu, i)
+        uloader.menu.printMenu(menu, i)
     elseif signal[1] == "component_added" or signal[1] == "component_removed" then
         if signal[3] == "filesystem" then
-            menu = createMenu()
-            printMenu(menu, i)
+            menu = uloader.menu.createMenu()
+            uloader.menu.printMenu(menu, i)
         end
     end
 end
