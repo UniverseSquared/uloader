@@ -18,7 +18,7 @@ function readFile(fs, path)
 end
 
 function writeFile(fs, path, data)
-    local handle, reason = invoke(fs, "open", path)
+    local handle, reason = invoke(fs, "open", path, "w")
     if not handle then
         return nil, reason
     end
