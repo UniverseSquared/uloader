@@ -12,5 +12,20 @@ function readFile(fs, path)
         buffer = buffer .. (data or "")
     until data == nil
 
+    invoke(fs, "close", handle)
+
     return buffer
+end
+
+function writeFile(fs, path, data)
+    local handle, reason = invoke(fs, "open", path)
+    if not handle then
+        return nil, reason
+    end
+
+    local success = invoke(fs, "write", handle, data)
+
+    invoke(fs, "close", handle)
+
+    return success
 end
