@@ -24,6 +24,7 @@ end
 
 local urlBase = "https://raw.githubusercontent.com/UniverseSquared/uloader/master"
 local fileList = {
+    "/uloader/init.lua",
     "/uloader/config.lua",
     "/uloader/modules/internet_boot.lua",
     "/uloader/modules/boot_detection.lua",
