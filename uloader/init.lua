@@ -1,10 +1,7 @@
 local invoke = component.invoke
 local eeprom = component.proxy(component.list("eeprom")())
 local gpu = component.proxy(component.list("gpu")())
-local screen = component.list("screen")()
 local w, h = gpu.getResolution()
-
-gpu.bind(screen)
 
 local function readFile(fs, path)
     local handle, reason = invoke(fs, "open", path)
