@@ -40,8 +40,12 @@ function uloader.config.loadConfig()
     local fs = eeprom.getData()
     
     local defaultConfig = {
+        alwaysMenu = true,
         resolution = "max",
-        alwaysMenu = true
+        backgroundColor = 0x000000,
+        foregroundColor = 0xFFFFFF,
+        selectedBackgroundColor = 0xFFFFFF,
+        selectedForegroundColor = 0x000000
     }
 
     if not invoke(fs, "exists", "/uloader/config.lua") then
