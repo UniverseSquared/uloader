@@ -8,13 +8,13 @@ If you want to update uloader when it is already installed, reboot to the uloade
 
 To install uloader from OpenOS, use the following commands:
 ```
-# wget https://raw.githubusercontent.com/UniverseSquared/uloader/master/installer_openos.lua
-# installer_openos
+# wget https://raw.githubusercontent.com/UniverseSquared/uloader/master/installer.lua
+# installer
 ```
 
 After the installation completes, you should be able to reboot to uloader.
 
-If your computer does not run OpenOS, the OpenOS installer will not work. In this case, download [installer.lua](https://raw.githubusercontent.com/UniverseSquared/uloader/master/installer.lua), flash it to the eeprom and reboot. You also must set the eeprom's data to the address of the hard drive uloader's files should be stored on. This can be done with the eeprom's `setData` method. **Before doing this, however, you should ensure you have an internet card.**
+Using the installer from an os other than OpenOS may work, but is not supported. If it does not run, download [installer.lua](https://raw.githubusercontent.com/UniverseSquared/uloader/master/installer.lua), flash it to the eeprom and reboot. You also must set the eeprom's data to the address of the hard drive uloader's files should be stored on. This can be done with the eeprom's `setData` method. **Before doing this, however, you should ensure you have an internet card.**
 
 ## Features
 

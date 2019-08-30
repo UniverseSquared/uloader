@@ -1,10 +1,12 @@
+local computer = computer or require("computer")
+local component = component or require("component")
 local eeprom = component.proxy(component.list("eeprom")())
 local fs = component.proxy(eeprom.getData())
 local internet = component.proxy(component.list("internet")())
 local gpu = component.proxy(component.list("gpu")())
 
 local y = 1
-function status(str)
+local status = print or function(str)
     gpu.set(1, y, str)
     y = y + 1
 end
