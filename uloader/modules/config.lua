@@ -74,3 +74,9 @@ function uloader.config.applyConfig(config)
 
     gpu.setResolution(resolution[1], resolution[2])
 end
+
+setmetatable(uloader.config, {
+    __index = function(table, key, value)
+        return uloader.config.config[key]
+    end
+})

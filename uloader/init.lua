@@ -52,6 +52,7 @@ for k, filename in pairs(invoke(fs, "list", "/uloader/modules")) do
 end
 
 local config = uloader.config.loadConfig()
+uloader.config.config = config
 uloader.config.applyConfig(config)
 
 local menu = uloader.menu.createMenu()
