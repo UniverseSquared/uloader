@@ -15,13 +15,11 @@ function uloader.menu.createMenu()
     end
 
     table.insert(menu, {
-        text = "Internet Boot", callback = function()
-            uloader.internet.internetBoot()
-        end
+        text = "Internet Boot", callback = uloader.internet.internetBoot
     })
     
     table.insert(menu, {
-        text = "Update uloader", callback = selfUpdate
+        text = "Update uloader", callback = uloader.updater.selfUpdate
     })
     
     table.insert(menu, {
