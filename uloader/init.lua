@@ -35,22 +35,35 @@ function uloader.waitForKey()
     end
 end
 
-local fs = eeprom.getData()
-for k, filename in pairs(invoke(fs, "list", "/uloader/modules")) do
-    if k ~= "n" then
-        local path = "/uloader/modules/" .. filename
-        local module, err = load(readFile(fs, path), "=" .. filename)
-        if module then
-            module()
-        else
-            error(err)
+local function loadModules(path)
+    local fs = eeprom.getData()
+    if not invoke(fs, "isDirectory", path) then
+        -- TODO: Display an error
+        return
+    end
+
+    for k, filename in pairs(invoke(fs, "list", path)) do
+        if k ~= "n" then
+            local path = path .. "/" .. filename
+            local module, err = load(readFile(fs, path), "=" .. filename)
+            if module then
+                module()
+            else
+                error(err)
+            end
         end
     end
 end
 
+loadModules("/uloader/modules")
+
 local config = uloader.config.loadConfig()
 uloader.config.config = config
 uloader.config.applyConfig(config)
+
+if config.customModulePath then
+    loadModules(config.customModulePath)
+end
 
 local menu = uloader.menu.createMenu()
 

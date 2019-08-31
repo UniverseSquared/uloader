@@ -30,6 +30,7 @@ Some options can be configured in uloader, by modifying the configuration file a
 | ------ | ----------- | ------------- |
 | `resolution` | The resolution that should be set on boot. Either a table of two numbers (width and height) or the string "max", which sets the resolution to the maximum the GPU can handle. | `"max"` |
 | `alwaysMenu` | If this is true, the boot selection menu will always be shown. If this is false, the menu will be skipped if there is only one boot candidate. | `true` |
+| `customModulePath` | The path to a directory to load additional modules from. If set to nil, no custom modules will be loaded. | `nil` |
 | `backgroundColor` | The background color in the menu. | `0x000000` |
 | `foregroundColor` | The foreground (text) color in the menu. | `0xFFFFFF` |
 | `selectedBackgroundColor` | The background color of the selected item in the menu. | `0xFFFFFF` |
