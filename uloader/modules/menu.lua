@@ -6,12 +6,15 @@ uloader.menu = {}
 
 function uloader.menu.createMenu()
     local menu = {}
+    local totalBootMethods = 0
 
     for fs in component.list("filesystem") do
         local bootMethods = uloader.boot.detectBoot(fs)
         for _, method in pairs(bootMethods) do
             table.insert(menu, method)
         end
+
+        totalBootMethods = totalBootMethods + #bootMethods
     end
 
     table.insert(menu, {
@@ -35,6 +38,8 @@ function uloader.menu.createMenu()
     })
 
     uloader.menu.menu = menu
+
+    return totalBootMethods
 end
 
 function uloader.menu.printMenu(i)

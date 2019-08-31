@@ -2,7 +2,7 @@ local invoke = component.invoke
 
 uloader.boot = {}
 
-local function boot(initData)
+function uloader.boot.boot(initData)
     computer.getBootAddress = function() return initData.fs end
     computer.setBootAddress = function(addr) end
 

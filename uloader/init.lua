@@ -20,12 +20,6 @@ local function readFile(fs, path)
     return buffer
 end
 
-local function boot(initData)
-    local buffer = uloader.fs.readFile(initData.fs, initData.path)
-    local init = load(buffer)
-    init()
-end
-
 function uloader.waitForKey()
     while true do
         local signal = { computer.pullSignal() }
@@ -61,18 +55,14 @@ local config = uloader.config.loadConfig()
 uloader.config.config = config
 uloader.config.applyConfig(config)
 
-uloader.menu.createMenu()
+local totalBootMethods = uloader.menu.createMenu()
 
 if config.customModulePath then
     loadModules(config.customModulePath)
 end
 
-if #uloader.menu.menu == 0 then
-    error("no bootable medium found")
-end
-
-if #uloader.menu.menu == 1 and not config.alwaysMenu then
-    boot(uloader.menu.menu[1])
+if totalBootMethods == 1 and not config.alwaysMenu then
+    uloader.boot.boot(uloader.menu.menu[1])
 end
 
 local i = 1
