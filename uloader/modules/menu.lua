@@ -34,15 +34,15 @@ function uloader.menu.createMenu()
         end
     })
 
-    return menu
+    uloader.menu.menu = menu
 end
 
-function uloader.menu.printMenu(menu, i)
+function uloader.menu.printMenu(i)
     gpu.setBackground(uloader.config.backgroundColor)
     gpu.setForeground(uloader.config.foregroundColor)
     gpu.fill(1, 1, w, h, " ")
 
-    for k, init in pairs(menu) do
+    for k, init in pairs(uloader.menu.menu) do
         if k == i then
             gpu.setBackground(uloader.config.selectedBackgroundColor)
             gpu.setForeground(uloader.config.selectedForegroundColor)

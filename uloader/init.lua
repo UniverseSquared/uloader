@@ -61,22 +61,22 @@ local config = uloader.config.loadConfig()
 uloader.config.config = config
 uloader.config.applyConfig(config)
 
+uloader.menu.createMenu()
+
 if config.customModulePath then
     loadModules(config.customModulePath)
 end
 
-local menu = uloader.menu.createMenu()
-
-if #menu == 0 then
+if #uloader.menu.menu == 0 then
     error("no bootable medium found")
 end
 
-if #menu == 1 and not config.alwaysMenu then
-    boot(menu[1])
+if #uloader.menu.menu == 1 and not config.alwaysMenu then
+    boot(uloader.menu.menu[1])
 end
 
 local i = 1
-uloader.menu.printMenu(menu, i)
+uloader.menu.printMenu(i)
 while true do
     local signal = { computer.pullSignal() }
     if signal[1] == "key_down" then
@@ -86,20 +86,20 @@ while true do
         elseif code == 208 then
             i = i + 1
         elseif code == 28 then
-            menu[i].callback(menu[i])
+            uloader.menu.menu[i].callback(uloader.menu.menu[i])
         end
 
-        if i > #menu then
+        if i > #uloader.menu.menu then
             i = 1
         elseif i < 1 then
-            i = #menu
+            i = #uloader.menu.menu
         end
 
-        uloader.menu.printMenu(menu, i)
+        uloader.menu.printMenu(i)
     elseif signal[1] == "component_added" or signal[1] == "component_removed" then
         if signal[3] == "filesystem" then
-            menu = uloader.menu.createMenu()
-            uloader.menu.printMenu(menu, i)
+            uloader.menu.createMenu()
+            uloader.menu.printMenu(i)
         end
     end
 end
