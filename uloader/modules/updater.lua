@@ -32,6 +32,14 @@ function uloader.updater.selfUpdate()
 
     internet = component.proxy(internet)
 
+    if not internet.isHttpEnabled() then
+        gpu.set(1, 1, "Updating requires HTTP to be enabled.")
+        gpu.set(1, 2, "To continue, enable it in your OpenComputers config.")
+        gpu.set(1, 3, "Press any key to continue.")
+        uloader.waitForKey()
+        return
+    end
+
     gpu.set(1, 1, "Downloading installer...")
     local data = downloadFile("https://raw.githubusercontent.com/UniverseSquared/uloader/master/installer.lua")
 

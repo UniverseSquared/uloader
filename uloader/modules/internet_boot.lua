@@ -18,6 +18,14 @@ function uloader.internet.internetBoot()
 
     internet = component.proxy(internet)
 
+    if not internet.isHttpEnabled() then
+        gpu.set(1, 1, "Internet booting requires HTTP to be enabled.")
+        gpu.set(1, 2, "To continue, enable it in your OpenComputers config.")
+        gpu.set(1, 3, "Press any key to continue.")
+        uloader.waitForKey()
+        return
+    end
+
     gpu.set(1, 1, "Paste (Shift+Insert) the URL to boot from.")
 
     local url = nil
