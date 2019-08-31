@@ -26,7 +26,7 @@ function uloader.updater.selfUpdate()
     if not internet then
         gpu.set(1, 1, "Updating requires an Internet Card.")
         gpu.set(1, 2, "Press any key to continue.")
-        waitForKey()
+        uloader.waitForKey()
         return
     end
 

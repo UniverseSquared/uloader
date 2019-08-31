@@ -3,6 +3,8 @@ local eeprom = component.proxy(component.list("eeprom")())
 local gpu = component.proxy(component.list("gpu")())
 local w, h = gpu.getResolution()
 
+uloader = {}
+
 local function readFile(fs, path)
     local handle, reason = invoke(fs, "open", path)
     if not handle then
@@ -24,7 +26,7 @@ local function boot(initData)
     init()
 end
 
-function waitForKey()
+function uloader.waitForKey()
     while true do
         local signal = { computer.pullSignal() }
         if signal[1] == "key_down" then
@@ -32,8 +34,6 @@ function waitForKey()
         end
     end
 end
-
-uloader = {}
 
 local fs = eeprom.getData()
 for k, filename in pairs(invoke(fs, "list", "/uloader/modules")) do

@@ -5,18 +5,19 @@ function uloader.internet.internetBoot()
     local w, h = gpu.getResolution()
     local internet = component.list("internet")()
 
+    gpu.setBackground(0x000000)
+    gpu.setForeground(0xFFFFFF)
+    gpu.fill(1, 1, w, h, " ")
+
     if not internet then
-        gpu.set(1, 2, "Internet booting requires an Internet Card.")
-        gpu.set(1, 3, "Press any key to continue.")
-        waitForKey()
+        gpu.set(1, 1, "Internet booting requires an Internet Card.")
+        gpu.set(1, 2, "Press any key to continue.")
+        uloader.waitForKey()
         return
     end
 
     internet = component.proxy(internet)
 
-    gpu.setBackground(0x000000)
-    gpu.setForeground(0xFFFFFF)
-    gpu.fill(1, 1, w, h, " ")
     gpu.set(1, 1, "Paste (Shift+Insert) the URL to boot from.")
 
     local url = nil
