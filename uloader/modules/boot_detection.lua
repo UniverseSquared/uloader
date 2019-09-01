@@ -19,7 +19,7 @@ function uloader.boot.detectBoot(fs)
             local path = "/boot/kernel/" .. file
             if not invoke(fs, "isDirectory", path) and k ~= "n" then
                 table.insert(bootMethods, {
-                    fs = fs, path = path, callback = boot
+                    fs = fs, path = path, callback = uloader.boot.boot
                 })
             end
         end
@@ -27,7 +27,7 @@ function uloader.boot.detectBoot(fs)
     
     if invoke(fs, "exists", "/init.lua") then
         table.insert(bootMethods, {
-            fs = fs, path = "/init.lua", callback = boot
+            fs = fs, path = "/init.lua", callback = uloader.boot.boot
         })
     end
 
