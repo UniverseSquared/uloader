@@ -42,6 +42,12 @@ function uloader.menu.createMenu()
     return totalBootMethods
 end
 
+function uloader.menu.printErrors()
+    for i = 1, #uloader.errors do
+        gpu.set(1, #uloader.menu.menu + i + 1, uloader.errors[i])
+    end
+end
+
 function uloader.menu.printMenu(i)
     gpu.setBackground(uloader.config.backgroundColor)
     gpu.setForeground(uloader.config.foregroundColor)
@@ -69,4 +75,6 @@ function uloader.menu.printMenu(i)
             gpu.set(1, k, str)
         end
     end
+
+    uloader.menu.printErrors()
 end

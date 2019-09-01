@@ -3,7 +3,13 @@ local eeprom = component.proxy(component.list("eeprom")())
 local gpu = component.proxy(component.list("gpu")())
 local w, h = gpu.getResolution()
 
-uloader = {}
+uloader = {
+    errors = {}
+}
+
+function uloader.error(message)
+    table.insert(uloader.errors, message)
+end
 
 local function readFile(fs, path)
     local handle, reason = invoke(fs, "open", path)
@@ -29,11 +35,16 @@ function uloader.waitForKey()
     end
 end
 
-local function loadModules(path)
+local function loadModules(path, isCustomModules)
     local fs = eeprom.getData()
     if not invoke(fs, "isDirectory", path) then
-        -- TODO: Display an error
-        return
+        if isCustomModules then
+            uloader.error("Warning: customModulePath is not a directory.")
+            return
+        else
+            -- TODO: Attempt to load init.lua instead of dying here.
+            error("uloader: Failed to load core modules!")
+        end
     end
 
     for k, filename in pairs(invoke(fs, "list", path)) do
@@ -49,7 +60,7 @@ local function loadModules(path)
     end
 end
 
-loadModules("/uloader/modules")
+loadModules("/uloader/modules", false)
 
 local config = uloader.config.loadConfig()
 uloader.config.config = config
@@ -58,7 +69,7 @@ uloader.config.applyConfig(config)
 local totalBootMethods = uloader.menu.createMenu()
 
 if config.customModulePath then
-    loadModules(config.customModulePath)
+    loadModules(config.customModulePath, true)
 end
 
 if totalBootMethods == 1 and not config.alwaysMenu then
