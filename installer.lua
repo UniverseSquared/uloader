@@ -28,12 +28,14 @@ local urlBase = "https://raw.githubusercontent.com/UniverseSquared/uloader/maste
 local fileList = {
     "/uloader/init.lua",
     "/uloader/config.lua",
-    "/uloader/modules/internet_boot.lua",
-    "/uloader/modules/boot_detection.lua",
-    "/uloader/modules/fs.lua",
-    "/uloader/modules/updater.lua",
-    "/uloader/modules/menu.lua",
-    "/uloader/modules/config.lua"
+    "/uloader/modules/01_fs.lua",
+    "/uloader/modules/02_config.lua",
+    "/uloader/modules/03_boot_detection.lua",
+    "/uloader/modules/04_openos_boot.lua",
+    "/uloader/modules/05_plan9k_boot.lua",
+    "/uloader/modules/97_updater.lua",
+    "/uloader/modules/98_internet_boot.lua",
+    "/uloader/modules/99_menu.lua"
 }
 
 fs.makeDirectory("/uloader")
