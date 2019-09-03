@@ -7,10 +7,6 @@ uloader = {
     errors = {}
 }
 
-function uloader.error(message)
-    table.insert(uloader.errors, message)
-end
-
 local function readFile(fs, path)
     local handle, reason = invoke(fs, "open", path)
     if not handle then
@@ -24,6 +20,35 @@ local function readFile(fs, path)
     until data == nil
 
     return buffer
+end
+
+function uloader.error(message)
+    table.insert(uloader.errors, message)
+end
+
+function uloader.fatalError(message)
+    gpu.setBackground(0x000000)
+    gpu.setForeground(0xFFFFFF)
+    gpu.fill(1, 1, w, h, " ")
+
+    gpu.set(1, 1, message)
+    gpu.set(1, 2, "Press any key to attempt to load init.lua from a filesystem.")
+
+    uloader.waitForKey()
+
+    for fs in component.list("filesystem") do
+        if invoke(fs, "exists", "/init.lua") then
+            computer.getBootAddress = function() return fs end
+            computer.setBootAddress = function(addr) end
+
+            local init = load(readFile(fs, "/init.lua"), "=init")
+            init()
+            while true do computer.pullSignal() end
+        end
+    end
+
+    gpu.set(1, 3, "Failed to find a bootable medium!")
+    while true do computer.pullSignal() end
 end
 
 function uloader.waitForKey()
@@ -42,8 +67,7 @@ local function loadModules(path, isCustomModules)
             uloader.error("Warning: customModulePath is not a directory.")
             return
         else
-            -- TODO: Attempt to load init.lua instead of dying here.
-            error("uloader: Failed to load core modules!")
+            uloader.fatalError("uloader: Failed to load core modules!")
         end
     end
 
@@ -54,7 +78,7 @@ local function loadModules(path, isCustomModules)
             if module then
                 module()
             else
-                error(err)
+                uloader.fatalError(err)
             end
         end
     end
@@ -66,11 +90,11 @@ local config = uloader.config.loadConfig()
 uloader.config.config = config
 uloader.config.applyConfig(config)
 
-local totalBootMethods = uloader.menu.createMenu()
-
 if config.customModulePath then
     loadModules(config.customModulePath, true)
 end
+
+local totalBootMethods = uloader.menu.createMenu()
 
 if totalBootMethods == 1 and not config.alwaysMenu then
     uloader.boot.boot(uloader.menu.menu[1])
