@@ -91,7 +91,6 @@ end
 loadModules("/uloader/modules", false)
 
 local config = uloader.config.loadConfig()
-uloader.config.config = config
 uloader.config.applyConfig(config)
 
 if config.customModulePath then

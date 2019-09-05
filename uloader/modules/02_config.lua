@@ -68,6 +68,8 @@ function uloader.config.loadConfig()
         end
     end
 
+    uloader.config.config = config
+
     return config
 end
 
