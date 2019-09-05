@@ -49,9 +49,7 @@ function uloader.menu.printErrors()
 end
 
 function uloader.menu.printMenu(i)
-    gpu.setBackground(uloader.config.backgroundColor)
-    gpu.setForeground(uloader.config.foregroundColor)
-    gpu.fill(1, 1, w, h, " ")
+    uloader.clearScreen()
 
     for k, init in pairs(uloader.menu.menu) do
         if k == i then

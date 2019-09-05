@@ -22,14 +22,18 @@ local function readFile(fs, path)
     return buffer
 end
 
+function uloader.clearScreen()
+    gpu.setBackground(uloader.config.backgroundColor)
+    gpu.setForeground(uloader.config.foregroundColor)
+    gpu.fill(1, 1, w, h, " ")
+end
+
 function uloader.error(message)
     table.insert(uloader.errors, message)
 end
 
 function uloader.fatalError(message)
-    gpu.setBackground(0x000000)
-    gpu.setForeground(0xFFFFFF)
-    gpu.fill(1, 1, w, h, " ")
+    uloader.clearScreen()
 
     gpu.set(1, 1, message)
     gpu.set(1, 2, "Press any key to attempt to load init.lua from a filesystem.")

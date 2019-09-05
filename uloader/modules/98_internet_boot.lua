@@ -5,9 +5,7 @@ function uloader.internet.internetBoot()
     local w, h = gpu.getResolution()
     local internet = component.list("internet")()
 
-    gpu.setBackground(0x000000)
-    gpu.setForeground(0xFFFFFF)
-    gpu.fill(1, 1, w, h, " ")
+    uloader.clearScreen()
 
     if not internet then
         gpu.set(1, 1, "Internet booting requires an Internet Card.")

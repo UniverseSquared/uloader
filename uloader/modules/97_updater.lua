@@ -19,9 +19,7 @@ local function downloadFile(url)
 end
 
 function uloader.updater.selfUpdate()
-    gpu.setBackground(0x000000)
-    gpu.setForeground(0xFFFFFF)
-    gpu.fill(1, 1, w, h, " ")
+    uloader.clearScreen()
 
     if not internet then
         gpu.set(1, 1, "Updating requires an Internet Card.")
@@ -43,9 +41,7 @@ function uloader.updater.selfUpdate()
     gpu.set(1, 1, "Downloading installer...")
     local data = downloadFile("https://raw.githubusercontent.com/UniverseSquared/uloader/master/installer.lua")
 
-    gpu.setBackground(0x000000)
-    gpu.setForeground(0xFFFFFF)
-    gpu.fill(1, 1, w, h, " ")
+    uloader.clearScreen()
 
     load(data)()
 end
