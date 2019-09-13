@@ -100,7 +100,21 @@ end
 local totalBootMethods = uloader.menu.createMenu()
 
 if totalBootMethods == 1 and not config.alwaysMenu then
-    uloader.boot.boot(uloader.menu.menu[1])
+    if uloader.autobootTimeout == 0 then
+        uloader.boot.boot(uloader.menu.menu[1])
+    else
+        gpu.set(1, 1, "Autobooting in " .. config.autobootTimeout .. " seconds...")
+        gpu.set(1, 2, "Press any key to access the menu.")
+
+        while true do
+            local event = computer.pullSignal(config.autobootTimeout)
+            if event == nil then
+                uloader.boot.boot(uloader.menu.menu[1])
+            elseif event == "key_down" then
+                break
+            end
+        end
+    end
 end
 
 local i = 1
