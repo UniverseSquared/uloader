@@ -9,7 +9,7 @@ function uloader.boot.boot(initData)
     computer.setBootAddress = function(addr) end
 
     local buffer = uloader.fs.readFile(initData.fs, initData.path)
-    local init = load(buffer)
+    local init = load(buffer, "=" .. initData.path)
     init()
 end
 
